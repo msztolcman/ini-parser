@@ -399,6 +399,144 @@ package Ini::Parser::Error;
 1;
 
 __END__
+
 =head1 NAME
 
 Ini::Parser - simple INI files parser with imports feature!
+
+=head1 VERSION
+
+Version 0.1
+
+=head1 SYNOPSIS
+
+    use Ini::Parser;
+
+    # create object and feed with some data (optional)
+    my $ini = Ini::Parser->new({ src => 'filename.ini', src_type => 'filename' });
+    my $Ini = Ini::Parser->new({ src => $filehandler, src_type => 'filehandler' });
+    my $Ini = Ini::Parser->new({ src => $obj_with_read_method, src_type => 'filenamobject' });
+    my $Ini = Ini::Parser->new({ src => $ini_in_string, src_type => 'string' });
+
+    # feed with additional data
+    $ini->feed('filename2.ini', { src_type => 'filename' });
+
+    # parse when everything is loaded
+    $ini->parse();
+
+    # get all sections names
+    $ini->sections();
+
+    # get section data (Ini::Parse::Section)
+    $ini->section('name');
+
+    # get key from section
+    $ini->section('name')->get('key');
+
+    # whole config in single hash
+    my %options = $ini->to_hash();
+
+    # all keys names from single section
+    my @keys = $ini->section('name')->keys()
+
+    # all values from single section
+    my @values = $ini->section('name')->values()
+
+    # whole section data in single hash
+    my %section = $ini->section('name')->to_hash();
+
+=head1 DESCRIPTION
+
+=head1 EXPORT
+
+=head1 SUBROUTINES/METHODS
+
+=head2 Ini::Parser::new
+
+=head2 Ini::Parser::feed
+
+=head2 Ini::Parser::parse
+
+=head2 Ini::Parser::merge
+
+=head2 Ini::Parser::section
+
+=head2 Ini::Parser::sections
+
+=head2 Ini::Parser::is_parsed
+
+=head2 Ini::Parser::to_hash
+
+=head2 Ini::Parser::process_instruction
+
+=head2 Ini::Parser::MAX_FEED_FILENAME_LENGTH
+
+=head2 Ini::Parser::Section::new
+
+=head2 Ini::Parser::Section::get
+
+=head2 Ini::Parser::Section::keys
+
+=head2 Ini::Parser::Section::values
+
+=head2 Ini::Parser::Section::to_hash
+
+=head1 SEE ALSO
+
+=over 4
+
+=item L<https://github.com/mysz/try-tiny-smartcatch>
+
+Try::Tiny::SmartCatch home.
+
+=item L<Try::Tiny>
+
+Minimal try/catch with proper localization of $@, base of L<Try::Tiny::SmartCatch>
+
+=item L<TryCatch>
+
+First class try catch semantics for Perl, without source filters.
+
+=back
+
+=head1 AUTHOR
+
+Marcin Sztolcman, C<< <marcin at urzenia.net> >>
+
+=head1 BUGS
+
+Please report any bugs or feature requests through the web interface at
+L<http://github.com/mysz/ini-parser/issues>.
+
+=head1 SUPPORT
+
+You can find documentation for this module with the perldoc command.
+
+    perldoc Ini::Parser
+
+You can also look for information at:
+
+=over 4
+
+=item * Ini::Parser home & source code
+
+L<http://github.com/mysz/ini-parser>
+
+=item * Issue tracker (report bugs here)
+
+L<http://github.com/mysz/ini-parser/issues>
+
+=item * Search CPAN
+
+L<http://search.cpan.org/dist/ini-parser/>
+
+=back
+
+=head1 LICENSE AND COPYRIGHT
+
+    Copyright (c) 2012-2013 Marcin Sztolcman. All rights reserved.
+
+    This program is free software; you can redistribute
+    it and/or modify it under the terms of the MIT license.
+
+=cut

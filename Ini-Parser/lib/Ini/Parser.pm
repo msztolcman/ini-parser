@@ -557,9 +557,13 @@ Create new instance.
 
 =over 2
 
-=item C<src> - (STRING|OBJECT|GLOB) [opt] see: Ini::Parser::feed
+=item C<src> - (STRING|OBJECT|GLOB) [opt]
 
-=item C<src_type> - (STRING) [opt] see: Ini::Parser::feed
+see: Ini::Parser::feed
+
+=item C<src_type> - (STRING) [opt]
+
+see: Ini::Parser::feed
 
 =back
 
@@ -581,13 +585,19 @@ Feed C<Ini::Parser> with data to parse.
 
 =over
 
-=item C<src> - (STRING|OBJECT|GLOB) [opt] data to feed
+=item C<src> - (STRING|OBJECT|GLOB) [opt]
 
-=item C<cfg> - (ref. HASH) [opt] additional config
+data to feed
+
+=item C<cfg> - (ref. HASH) [opt]
+
+additional config
 
 =over 2
 
-=item C<src_type> - (STRING) [opt] If not given, will try to guest what to do with C<src>. One of:
+=item C<src_type> - (STRING) [opt]
+
+If not given, will try to guest what to do with C<src>. One of:
 
 =over 3
 
@@ -615,13 +625,13 @@ Feed C<Ini::Parser> with data to parse.
 
 =head2 Ini::Parser::parse
 
-Description
+Parse all feeded sources.
 
 =head3 Arguments
 
 =over
 
-=item
+=item B<NONE>
 
 =back
 
@@ -629,19 +639,28 @@ Description
 
 =over
 
-=item
+=item C<self> instance.
 
 =back
 
 =head2 Ini::Parser::merge
 
-Description
+Merge given data with current one.
 
 =head3 Arguments
 
 =over
 
-=item
+=item C<src> - (ref. HASH|Ini::Parser)
+
+New data to merge into current instance. If Ini::Parser instance is given,
+we call L<Ini::Parser::to_hash> first.
+
+=item C<dst> - (STRING) [opt]
+
+import C<src> into section C<dst>. If given, assume that C<src> is C<dst>
+section content. If missing, assume that C<src> is set of sections and
+their content.
 
 =back
 
@@ -649,7 +668,7 @@ Description
 
 =over
 
-=item
+=item C<self> instance.
 
 =back
 

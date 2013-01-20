@@ -447,13 +447,155 @@ Version 0.1
 
 =head1 DESCRIPTION
 
+Ini::Parser provides simple parser to .ini files. Syntax which is supported:
+
+    [section name]
+    key1 = value
+    "key2" = value
+    key2 = "value"
+    key3 = "multi
+    line
+    value"
+
+    [section2]
+    [section3 name]
+    key4 = value4
+    "key name = with equal" = value5
+
+    !import = somefile.ini
+
+=head2 SECTION
+
+Section name can contain characters: a-z, A-Z, 0-9, ':', ' ', '!', '-'
+and must have at least one characters length.
+
+=head2 KEY
+
+Key can have two different syntaxes:
+1. Without quotes. Must begin with one of: a-z, A-Z, 0-9, ':', '-',
+and further can contain characters: a-z, A-Z, 0-9, ':', '!', '-'
+and must have at least one characters length.
+
+2. With quotes. Must begin and end with double quotes char, and contain
+characters: a-z, A-Z, 0-9, ':', '!', ' ', '=', '-'
+
+=head2 VALUE
+
+Value can contain almost any character. Also have two forms:
+
+1. Without quotes. There can be any character but without new line character.
+
+2. With quotes. There can be any character without double quote character
+(new line character is allowed).
+
+=head2 DIRECTIVES
+
+=head3 IMPORT
+
+Currently the only directive is recognized it's import. It import other .ini
+file. Imported file override/join to currently parsed data.
+
+For example:
+
+if in host.ini we have:
+
+    [section1]
+    key1 = value1
+    key2 = value2
+
+    !import = guest.ini
+
+    [section2]
+    key4 = value4
+
+and in guest.ini:
+
+    [section1]
+    key1 = new_value1
+    key3 = value3
+
+    [section3]
+    key5 = value5
+
+After parse we have:
+
+    {
+        section1 => {
+            key1 => 'new_value1',
+            key2 => 'value2',
+            key3 => 'value3',
+        },
+        section2 => {
+            key4 => 'value4'
+        },
+        section3 => {
+            key5 => 'value5'
+        }
+    }
+
+Files are parsed sequentially, so first statement will be overridden by next.
+The same concerns C<import> directive. In previous example, parser find I<section1>,
+locate keys I<key1> and I<key2>, next find C<import> directive. Parser
+now parses imported file (here: I<guest.ini>). Merge currently parsed content with
+imported file, and returns to parsing next data from I<host.ini>.
+
 =head1 EXPORT
+
+There is no items exported. Module just provide class Ini::Parser.
 
 =head1 SUBROUTINES/METHODS
 
 =head2 Ini::Parser::new
 
+Create new instance.
+
+=head3 Arguments
+
+=over
+
+=item C<cfg> (ref. HASH) [opt]
+
+=over 2
+
+=item C<src> - (STRING|OBJECT|GLOB) [opt] see: Ini::Parser::feed
+
+=item C<src_type> - (STRING) [opt] see: Ini::Parser::feed
+
+=back
+
+=back
+
 =head2 Ini::Parser::feed
+
+Feed C<Ini::Parser> with data to parse.
+
+=head3 Arguments
+
+=over
+
+=item C<src> - (STRING|OBJECT|GLOB) [opt] data to feed
+
+=item C<cfg> - (ref. HASH) [opt] additional config
+
+=over 2
+
+=item C<src_type> - (STRING) [opt] If not given, will try to guest what to do with C<src>. One of:
+
+=over 3
+
+=item C<string> - C<src> is just string to parse
+
+=item C<object> - C<src> is object with method C<read>
+
+=item C<filename> - C<src> is path to file where data is stored
+
+=item C<filehandler> - C<src> is opened file handler
+
+=back
+
+=back
+
+=back
 
 =head2 Ini::Parser::parse
 

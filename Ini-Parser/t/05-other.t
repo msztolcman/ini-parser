@@ -60,6 +60,9 @@ is_deeply({$parser->to_hash()}, {
         key9 => 'value9',
     },
     'section with space' => { key10 => 'value10' },
-    'section!with:exclamation and colon and space' => { key11 => 'value11' },
+    'section!with:exclamation and colon and space' => {
+        key11 => 'value11',
+        'key12 with=some chars' => 'value12',
+    },
 }, 'to_hash');
 

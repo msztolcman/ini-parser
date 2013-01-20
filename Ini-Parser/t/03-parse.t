@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 19;
+use Test::More tests => 20;
 
 use Try::Tiny::SmartCatch 0.5 qw/:all/;
 
@@ -35,6 +35,8 @@ is($parser->section('section4')->get('key9'), "value9", 'get single line value -
 
 is($parser->section('section with space')->get('key10'), "value10", 'get value from section with space');
 is($parser->section('section!with:exclamation and colon and space')->get('key11'), "value11", 'get value from section with space, exclamation and colon');
+
+is($parser->section('section!with:exclamation and colon and space')->get('key12 with=some chars'), 'value12', 'get value from key with space and equal character (in quotes)');
 
 try sub {
     $parser->section('nonexistent');

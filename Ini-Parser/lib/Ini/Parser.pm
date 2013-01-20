@@ -30,7 +30,7 @@ package Ini::Parser;
                 (?:
                     ([a-zA-Z0-9:-][a-zA-Z0-9:!-]*)   # normal key name
                     |
-                    "([a-zA-Z0-9:!-]+)" # quoted key name
+                    "([a-zA-Z0-9:! =-]+)" # quoted key name
                     |
                     (![a-zA-Z0-9:!-]+)  # instruction
                 )

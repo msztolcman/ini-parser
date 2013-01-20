@@ -402,7 +402,7 @@ __END__
 
 =head1 NAME
 
-Ini::Parser - simple INI files parser with imports feature!
+Ini::Parser - simple INI files parser/reader with imports feature!
 
 =head1 VERSION
 

@@ -1,5 +1,21 @@
 Ini-Parser
 
+Ini::Parser provides simple parser to .ini files. Syntax which is supported:
+
+    [section name]
+    key1 = value
+    "key2" = value
+    key2 = "value"
+    key3 = "multi
+    line
+    value"
+
+    [section2]
+    [section3 name]
+    key4 = value4
+    "key name = with equal" = value5
+
+    !import = somefile.ini
 
 INSTALLATION
 

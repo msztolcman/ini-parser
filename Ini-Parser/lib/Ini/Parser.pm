@@ -696,13 +696,13 @@ Name of section from file.
 
 =head2 Ini::Parser::sections
 
-Description
+Returns list of sections names.
 
 =head3 Arguments
 
 =over
 
-=item
+=item B<NONE>
 
 =back
 
@@ -710,7 +710,9 @@ Description
 
 =over
 
-=item
+=item sections - (ARRAY of STRING)
+
+Array of section names from parsed sources.
 
 =back
 

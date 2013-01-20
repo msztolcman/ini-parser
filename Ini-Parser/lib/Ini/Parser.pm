@@ -17,7 +17,7 @@ package Ini::Parser;
         (?:^|\r?\n)+
         [ \t]*
         \[
-            ([a-zA-Z0-9: !-]+)
+            ([a-zA-Z0-9: !_-]+)
         \]
         [ \t]*
         (?=\r?\n|$)
@@ -28,11 +28,11 @@ package Ini::Parser;
             (?:
                 [ \t]*
                 (?:
-                    ([a-zA-Z0-9:-][a-zA-Z0-9:!-]*)   # normal key name
+                    ([a-zA-Z0-9:-][a-zA-Z0-9:!_-]*)   # normal key name
                     |
-                    "([a-zA-Z0-9:! =-]+)" # quoted key name
+                    "([a-zA-Z0-9:! =_-]+)" # quoted key name
                     |
-                    (![a-zA-Z0-9:!-]+)  # instruction
+                    (![a-zA-Z0-9:!_-]+)  # instruction
                 )
                 [ \t]*
                 =

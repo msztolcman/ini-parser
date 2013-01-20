@@ -1034,21 +1034,13 @@ String representation of exception.
 
 =head1 SEE ALSO
 
-=over 4
+=over
 
-=item L<https://github.com/mysz/try-tiny-smartcatch>
+=item Other .ini or config parsers
 
-Try::Tiny::SmartCatch home.
+L<Config::Tiny>, L<Config::Simple>, L<Config::General>
 
-=item L<Try::Tiny>
-
-Minimal try/catch with proper localization of $@, base of L<Try::Tiny::SmartCatch>
-
-=item L<TryCatch>
-
-First class try catch semantics for Perl, without source filters.
-
-=back
+=item L<Try::Tiny::SmartCatch>
 
 =head1 AUTHOR
 

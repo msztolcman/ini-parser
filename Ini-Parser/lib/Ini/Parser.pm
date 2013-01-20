@@ -17,7 +17,7 @@ package Ini::Parser;
         (?:^|\r?\n)+
         [ \t]*
         \[
-            ([a-zA-Z0-9:-]+)
+            ([a-zA-Z0-9: !-]+)
         \]
         [ \t]*
         (?=\r?\n|$)
@@ -100,7 +100,7 @@ package Ini::Parser;
 
         local($!);
         my($data);
-        if (!sysread($fh, $data, -s $fh, 0)) {
+        if (!defined(sysread($fh, $data, -s $fh, 0))) {
             throw(Ini::Parser::Error->new("Cannot read from handler: $!", $! + 0));
         }
 
@@ -140,7 +140,7 @@ package Ini::Parser;
                 $src_type = 'handler';
             }
             elsif (!ref($src)) {
-                if (length($src) < MAX_FEED_FILENAME_LENGTH && index($src, "\n") < 0) {
+                if (length($src) && length($src) < MAX_FEED_FILENAME_LENGTH && index($src, "\n") < 0) {
                     $src_type = 'filename';
                 }
                 else {
@@ -151,6 +151,9 @@ package Ini::Parser;
         else {
             $src_type = $$cfg{src_type};
         }
+
+        $src_type = ''
+            if (!defined($src_type));
 
         $callback = $self->can('__feed__' . $src_type);
 
@@ -270,7 +273,7 @@ package Ini::Parser;
 
         $self->is_parsed();
 
-        my @sections = keys (%{$$self{parsed}});
+        my @sections = sort keys (%{$$self{parsed}});
 
         return @sections;
     }
@@ -336,7 +339,7 @@ package Ini::Parser::Section;
     sub keys {
         my($self) = @_;
 
-        my @keys = keys(%{$$self{data}});
+        my @keys = sort keys(%{$$self{data}});
 
         return @keys;
     }
@@ -344,7 +347,7 @@ package Ini::Parser::Section;
     sub values {
         my($self) = @_;
 
-        my @values = values(%{$$self{data}});
+        my @values = sort values(%{$$self{data}});
 
         return @values;
     }

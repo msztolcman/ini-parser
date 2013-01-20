@@ -1042,6 +1042,8 @@ L<Config::Tiny>, L<Config::Simple>, L<Config::General>
 
 =item L<Try::Tiny::SmartCatch>
 
+=back
+
 =head1 AUTHOR
 
 Marcin Sztolcman, C<< <marcin at urzenia.net> >>

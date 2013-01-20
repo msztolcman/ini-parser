@@ -28,7 +28,7 @@ package Ini::Parser;
             (?:
                 [ \t]*
                 (?:
-                    ([a-zA-Z0-9:-][a-zA-Z0-9:!_-]*)   # normal key name
+                    ([a-zA-Z0-9:_-][a-zA-Z0-9:!_-]*)   # normal key name
                     |
                     "([a-zA-Z0-9:! =_-]+)" # quoted key name
                     |
@@ -466,18 +466,18 @@ Ini::Parser provides simple parser to .ini files. Syntax which is supported:
 
 =head2 SECTION
 
-Section name can contain characters: a-z, A-Z, 0-9, ':', ' ', '!', '-'
+Section name can contain characters: a-z, A-Z, 0-9, ':', ' ', '!', '_', '-'
 and must have at least one characters length.
 
 =head2 KEY
 
 Key can have two different syntaxes:
-1. Without quotes. Must begin with one of: a-z, A-Z, 0-9, ':', '-',
-and further can contain characters: a-z, A-Z, 0-9, ':', '!', '-'
+1. Without quotes. Must begin with one of: a-z, A-Z, 0-9, ':', '_', '-',
+and further can contain characters: a-z, A-Z, 0-9, ':', '!', '_', '-'
 and must have at least one characters length.
 
 2. With quotes. Must begin and end with double quotes char, and contain
-characters: a-z, A-Z, 0-9, ':', '!', ' ', '=', '-'
+characters: a-z, A-Z, 0-9, ':', '!', ' ', '=', '_', '-'
 
 =head2 VALUE
 

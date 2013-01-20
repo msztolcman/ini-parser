@@ -565,6 +565,14 @@ Create new instance.
 
 =back
 
+=head3 Returns
+
+=over
+
+=item C<Ini::Parser> instance.
+
+=back
+
 =head2 Ini::Parser::feed
 
 Feed C<Ini::Parser> with data to parse.
@@ -597,31 +605,273 @@ Feed C<Ini::Parser> with data to parse.
 
 =back
 
+=head3 Returns
+
+=over
+
+=item C<self> instance.
+
+=back
+
 =head2 Ini::Parser::parse
+
+Description
+
+=head3 Arguments
+
+=over
+
+=item
+
+=back
+
+=head3 Returns
+
+=over
+
+=item
+
+=back
 
 =head2 Ini::Parser::merge
 
+Description
+
+=head3 Arguments
+
+=over
+
+=item
+
+=back
+
+=head3 Returns
+
+=over
+
+=item
+
+=back
+
 =head2 Ini::Parser::section
+
+Description
+
+=head3 Arguments
+
+=over
+
+=item
+
+=back
+
+=head3 Returns
+
+=over
+
+=item
+
+=back
 
 =head2 Ini::Parser::sections
 
+Description
+
+=head3 Arguments
+
+=over
+
+=item
+
+=back
+
+=head3 Returns
+
+=over
+
+=item
+
+=back
+
 =head2 Ini::Parser::is_parsed
+
+Description
+
+=head3 Arguments
+
+=over
+
+=item
+
+=back
+
+=head3 Returns
+
+=over
+
+=item
+
+=back
 
 =head2 Ini::Parser::to_hash
 
+Description
+
+=head3 Arguments
+
+=over
+
+=item
+
+=back
+
+=head3 Returns
+
+=over
+
+=item
+
+=back
+
 =head2 Ini::Parser::process_instruction
+
+Description
+
+=head3 Arguments
+
+=over
+
+=item
+
+=back
+
+=head3 Returns
+
+=over
+
+=item
+
+=back
 
 =head2 Ini::Parser::MAX_FEED_FILENAME_LENGTH
 
+Description
+
+=head3 Arguments
+
+=over
+
+=item
+
+=back
+
+=head3 Returns
+
+=over
+
+=item
+
+=back
+
 =head2 Ini::Parser::Section::new
+
+Description
+
+=head3 Arguments
+
+=over
+
+=item
+
+=back
+
+=head3 Returns
+
+=over
+
+=item
+
+=back
 
 =head2 Ini::Parser::Section::get
 
+Description
+
+=head3 Arguments
+
+=over
+
+=item
+
+=back
+
+=head3 Returns
+
+=over
+
+=item
+
+=back
+
 =head2 Ini::Parser::Section::keys
+
+Description
+
+=head3 Arguments
+
+=over
+
+=item
+
+=back
+
+=head3 Returns
+
+=over
+
+=item
+
+=back
 
 =head2 Ini::Parser::Section::values
 
+Description
+
+=head3 Arguments
+
+=over
+
+=item
+
+=back
+
+=head3 Returns
+
+=over
+
+=item
+
+=back
+
 =head2 Ini::Parser::Section::to_hash
+
+Description
+
+=head3 Arguments
+
+=over
+
+=item
+
+=back
+
+=head3 Returns
+
+=over
+
+=item
+
+=back
 
 =head1 SEE ALSO
 

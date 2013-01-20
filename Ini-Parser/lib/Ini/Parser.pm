@@ -932,13 +932,19 @@ Section data.
 
 =head2 Ini::Parser::Error::new
 
-Description
+Create new instance.
 
 =head3 Arguments
 
 =over
 
-=item
+=item msg - (STRING)
+
+Error message.
+
+=item code - (INT)
+
+Error code.
 
 =back
 
@@ -946,19 +952,19 @@ Description
 
 =over
 
-=item
+=item C<Ini::Parser::Error> instance.
 
 =back
 
 =head2 Ini::Parser::Error::message
 
-Description
+Returns error message.
 
 =head3 Arguments
 
 =over
 
-=item
+=item B<NONE>
 
 =back
 
@@ -966,19 +972,25 @@ Description
 
 =over
 
-=item
+=item (STRING)
+
+Error message.
 
 =back
+
+=head2 Ini::Parser::Error::msg
+
+Alias to L<Ini::Parser::Error::message>.
 
 =head2 Ini::Parser::Error::code
 
-Description
+Returns error code.
 
 =head3 Arguments
 
 =over
 
-=item
+=item B<NONE>
 
 =back
 
@@ -986,19 +998,21 @@ Description
 
 =over
 
-=item
+=item (STRING)
+
+Error code.
 
 =back
 
 =head2 Ini::Parser::Error::to_string
 
-Description
+Returns string representation of exception.
 
 =head3 Arguments
 
 =over
 
-=item
+=item B<NONE>
 
 =back
 
@@ -1006,7 +1020,9 @@ Description
 
 =over
 
-=item
+=item (STRING)
+
+String representation of exception.
 
 =back
 
@@ -1069,3 +1085,4 @@ L<http://search.cpan.org/dist/ini-parser/>
     it and/or modify it under the terms of the MIT license.
 
 =cut
+

@@ -710,7 +710,7 @@ Returns list of sections names.
 
 =over
 
-=item sections - (ARRAY of STRING)
+=item (ARRAY of STRING)
 
 Array of section names from parsed sources.
 
@@ -734,7 +734,7 @@ Raise exception C<Ini::Parser::Error> if source is not parsed yet.
 
 =over
 
-=item is_parsed - (BOOL)
+=item (BOOL)
 
 Always true.
 
@@ -742,13 +742,13 @@ Always true.
 
 =head2 Ini::Parser::to_hash
 
-Description
+Return all parsed structure as HASH.
 
 =head3 Arguments
 
 =over
 
-=item
+=item B<NONE>
 
 =back
 
@@ -756,19 +756,36 @@ Description
 
 =over
 
-=item
+=item (HASH)
+
+Parsed data.
 
 =back
 
 =head2 Ini::Parser::process_instruction
 
-Description
+For internal use.
+
+Dispatch found directives to specific callbacks.
+
+When call, try to find method C<Ini::Parser::__process_instruction__ . INSTRUCTION_NAME>, and call it.
+In other case, raise C<Ini::Parser::Error> exception.
 
 =head3 Arguments
 
 =over
 
-=item
+=item instruction - (STRING)
+
+Instruction name.
+
+=item value - (STRING)
+
+Value of directive from .ini file. For example if in .ini file is directive:
+
+    !import = guest.ini
+
+'guest.ini' is value for directive C<import>.
 
 =back
 
@@ -776,7 +793,7 @@ Description
 
 =over
 
-=item
+=item C<self> instance.
 
 =back
 

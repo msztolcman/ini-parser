@@ -718,13 +718,15 @@ Array of section names from parsed sources.
 
 =head2 Ini::Parser::is_parsed
 
-Description
+Check for existent of parsed data.
+
+Raise exception C<Ini::Parser::Error> if source is not parsed yet.
 
 =head3 Arguments
 
 =over
 
-=item
+=item B<NONE>
 
 =back
 
@@ -732,7 +734,9 @@ Description
 
 =over
 
-=item
+=item is_parsed - (BOOL)
+
+Always true.
 
 =back
 

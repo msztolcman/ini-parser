@@ -543,13 +543,15 @@ imported file, and returns to parsing next data from I<host.ini>.
 
 There is no items exported. Module just provide class Ini::Parser.
 
-=head1 SUBROUTINES/METHODS
+=head1 SUBROUTINES
 
-=head2 Ini::Parser::new
+=head2 Class Ini::Parser
+
+=head3 Ini::Parser::new
 
 Create new instance.
 
-=head3 Arguments
+=head4 Arguments
 
 =over
 
@@ -559,29 +561,29 @@ Create new instance.
 
 =item C<src> - (STRING|OBJECT|GLOB) [opt]
 
-see: Ini::Parser::feed
+see: L</Ini::Parser::feed>
 
 =item C<src_type> - (STRING) [opt]
 
-see: Ini::Parser::feed
+see: L</Ini::Parser::feed>
 
 =back
 
 =back
 
-=head3 Returns
+=head4 Returns
 
 =over
 
-=item C<Ini::Parser> instance.
+=item L<Ini::Parser|/Class Ini::Parser> instance.
 
 =back
 
-=head2 Ini::Parser::feed
+=head3 Ini::Parser::feed
 
-Feed C<Ini::Parser> with data to parse.
+Feed L<Ini::Parser|/Class Ini::Parser> with data to parse.
 
-=head3 Arguments
+=head4 Arguments
 
 =over
 
@@ -615,7 +617,7 @@ If not given, will try to guest what to do with C<src>. One of:
 
 =back
 
-=head3 Returns
+=head4 Returns
 
 =over
 
@@ -623,11 +625,11 @@ If not given, will try to guest what to do with C<src>. One of:
 
 =back
 
-=head2 Ini::Parser::parse
+=head3 Ini::Parser::parse
 
 Parse all feeded sources.
 
-=head3 Arguments
+=head4 Arguments
 
 =over
 
@@ -635,7 +637,7 @@ Parse all feeded sources.
 
 =back
 
-=head3 Returns
+=head4 Returns
 
 =over
 
@@ -643,18 +645,18 @@ Parse all feeded sources.
 
 =back
 
-=head2 Ini::Parser::merge
+=head3 Ini::Parser::merge
 
 Merge given data with current one.
 
-=head3 Arguments
+=head4 Arguments
 
 =over
 
 =item C<src> - (ref. HASH|Ini::Parser)
 
 New data to merge into current instance. If Ini::Parser instance is given,
-we call L<Ini::Parser::to_hash> first.
+we call L</Ini::Parser::to_hash> first.
 
 =item C<dst> - (STRING) [opt]
 
@@ -664,7 +666,7 @@ their content.
 
 =back
 
-=head3 Returns
+=head4 Returns
 
 =over
 
@@ -672,11 +674,11 @@ their content.
 
 =back
 
-=head2 Ini::Parser::section
+=head3 Ini::Parser::section
 
 Return whole section data.
 
-=head3 Arguments
+=head4 Arguments
 
 =over
 
@@ -686,19 +688,19 @@ Name of section from file.
 
 =back
 
-=head3 Returns
+=head4 Returns
 
 =over
 
-=item C<Ini::Parser::Section> instance. See below.
+=item L<Ini::Parser::Section|/Class Ini::Parser::Section> instance. See below.
 
 =back
 
-=head2 Ini::Parser::sections
+=head3 Ini::Parser::sections
 
 Returns list of sections names.
 
-=head3 Arguments
+=head4 Arguments
 
 =over
 
@@ -706,7 +708,7 @@ Returns list of sections names.
 
 =back
 
-=head3 Returns
+=head4 Returns
 
 =over
 
@@ -716,13 +718,13 @@ Array of section names from parsed sources.
 
 =back
 
-=head2 Ini::Parser::is_parsed
+=head3 Ini::Parser::is_parsed
 
 Check for existent of parsed data.
 
-Raise exception C<Ini::Parser::Error> if source is not parsed yet.
+Raise exception L<Ini::Parser::Error|/Class Ini::Parser::Error> if source is not parsed yet.
 
-=head3 Arguments
+=head4 Arguments
 
 =over
 
@@ -730,7 +732,7 @@ Raise exception C<Ini::Parser::Error> if source is not parsed yet.
 
 =back
 
-=head3 Returns
+=head4 Returns
 
 =over
 
@@ -740,11 +742,11 @@ Always true.
 
 =back
 
-=head2 Ini::Parser::to_hash
+=head3 Ini::Parser::to_hash
 
 Return all parsed structure as HASH.
 
-=head3 Arguments
+=head4 Arguments
 
 =over
 
@@ -752,7 +754,7 @@ Return all parsed structure as HASH.
 
 =back
 
-=head3 Returns
+=head4 Returns
 
 =over
 
@@ -762,16 +764,16 @@ Parsed data.
 
 =back
 
-=head2 Ini::Parser::process_instruction
+=head3 Ini::Parser::process_instruction
 
 For internal use.
 
 Dispatch found directives to specific callbacks.
 
 When call, try to find method C<Ini::Parser::__process_instruction__ . INSTRUCTION_NAME>, and call it.
-In other case, raise C<Ini::Parser::Error> exception.
+In other case, raise L<Ini::Parser::Error|/Class Ini::Parser::Error> exception.
 
-=head3 Arguments
+=head4 Arguments
 
 =over
 
@@ -789,7 +791,7 @@ Value of directive from .ini file. For example if in .ini file is directive:
 
 =back
 
-=head3 Returns
+=head4 Returns
 
 =over
 
@@ -797,17 +799,19 @@ Value of directive from .ini file. For example if in .ini file is directive:
 
 =back
 
-=head2 Ini::Parser::MAX_FEED_FILENAME_LENGTH
+=head3 Ini::Parser::MAX_FEED_FILENAME_LENGTH
 
 For internal use.
 
-Constant that helps for guessing when given for L<Ini::Parser::feed> string is file name or data to parse.
+Constant that helps for guessing when given for L</Ini::Parser::feed> string is file name or data to parse.
 
-=head2 Ini::Parser::Section::new
+=head2 Class Ini::Parser::Section
+
+=head3 Ini::Parser::Section::new
 
 Create instance of class.
 
-=head3 Arguments
+=head4 Arguments
 
 =over
 
@@ -821,22 +825,22 @@ Section data.
 
 =back
 
-=head3 Returns
+=head4 Returns
 
 =over
 
-=item C<Ini::Parser::Section> instance
+=item L<Ini::Parser::Section|/Class Ini::Parser::Section> instance
 
 =back
 
-=head2 Ini::Parser::Section::get
+=head3 Ini::Parser::Section::get
 
 Return single key from section data.
 
-Raise C<Ini::Parser::Error> exception if key is not found, unless C<default>
+Raise L<Ini::Parser::Error|/Class Ini::Parser::Error> exception if key is not found, unless C<default>
 argument is given.
 
-=head3 Arguments
+=head4 Arguments
 
 =over
 
@@ -850,7 +854,7 @@ Default value to return if C<key> is not found.
 
 =back
 
-=head3 Returns
+=head4 Returns
 
 =over
 
@@ -860,13 +864,13 @@ Value
 
 =back
 
-=head2 Ini::Parser::Section::keys
+=head3 Ini::Parser::Section::keys
 
 Returns list of all keys from this section.
 
 Keys are always sorted.
 
-=head3 Arguments
+=head4 Arguments
 
 =over
 
@@ -874,7 +878,7 @@ Keys are always sorted.
 
 =back
 
-=head3 Returns
+=head4 Returns
 
 =over
 
@@ -884,13 +888,13 @@ List of keys from this section.
 
 =back
 
-=head2 Ini::Parser::Section::values
+=head3 Ini::Parser::Section::values
 
 Returns list of all values from this section.
 
-Order of values is always matching to order of keys read via L<Ini::Parser::Section::keys>.
+Order of values is always matching to order of keys read via L</Ini::Parser::Section::keys>.
 
-=head3 Arguments
+=head4 Arguments
 
 =over
 
@@ -898,7 +902,7 @@ Order of values is always matching to order of keys read via L<Ini::Parser::Sect
 
 =back
 
-=head3 Returns
+=head4 Returns
 
 =over
 
@@ -908,11 +912,11 @@ List of values from this section.
 
 =back
 
-=head2 Ini::Parser::Section::to_hash
+=head3 Ini::Parser::Section::to_hash
 
 Return all section data as HASH.
 
-=head3 Arguments
+=head4 Arguments
 
 =over
 
@@ -920,7 +924,7 @@ Return all section data as HASH.
 
 =back
 
-=head3 Returns
+=head4 Returns
 
 =over
 
@@ -930,11 +934,13 @@ Section data.
 
 =back
 
-=head2 Ini::Parser::Error::new
+=head2 Class Ini::Parser::Error
+
+=head3 Ini::Parser::Error::new
 
 Create new instance.
 
-=head3 Arguments
+=head4 Arguments
 
 =over
 
@@ -948,19 +954,19 @@ Error code.
 
 =back
 
-=head3 Returns
+=head4 Returns
 
 =over
 
-=item C<Ini::Parser::Error> instance.
+=item L<Ini::Parser::Error|/Class Ini::Parser::Error> instance.
 
 =back
 
-=head2 Ini::Parser::Error::message
+=head3 Ini::Parser::Error::message
 
 Returns error message.
 
-=head3 Arguments
+=head4 Arguments
 
 =over
 
@@ -968,7 +974,7 @@ Returns error message.
 
 =back
 
-=head3 Returns
+=head4 Returns
 
 =over
 
@@ -978,15 +984,15 @@ Error message.
 
 =back
 
-=head2 Ini::Parser::Error::msg
+=head3 Ini::Parser::Error::msg
 
-Alias to L<Ini::Parser::Error::message>.
+Alias to L</Ini::Parser::Error::message>.
 
-=head2 Ini::Parser::Error::code
+=head3 Ini::Parser::Error::code
 
 Returns error code.
 
-=head3 Arguments
+=head4 Arguments
 
 =over
 
@@ -994,7 +1000,7 @@ Returns error code.
 
 =back
 
-=head3 Returns
+=head4 Returns
 
 =over
 
@@ -1004,11 +1010,11 @@ Error code.
 
 =back
 
-=head2 Ini::Parser::Error::to_string
+=head3 Ini::Parser::Error::to_string
 
 Returns string representation of exception.
 
-=head3 Arguments
+=head4 Arguments
 
 =over
 
@@ -1016,7 +1022,7 @@ Returns string representation of exception.
 
 =back
 
-=head3 Returns
+=head4 Returns
 
 =over
 

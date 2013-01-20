@@ -799,33 +799,25 @@ Value of directive from .ini file. For example if in .ini file is directive:
 
 =head2 Ini::Parser::MAX_FEED_FILENAME_LENGTH
 
-Description
+For internal use.
 
-=head3 Arguments
-
-=over
-
-=item
-
-=back
-
-=head3 Returns
-
-=over
-
-=item
-
-=back
+Constant that helps for guessing when given for L<Ini::Parser::feed> string is file name or data to parse.
 
 =head2 Ini::Parser::Section::new
 
-Description
+Create instance of class.
 
 =head3 Arguments
 
 =over
 
-=item
+=item section - (STRING)
+
+Section name.
+
+=item data - (ref. HASH)
+
+Section data.
 
 =back
 
@@ -833,19 +825,28 @@ Description
 
 =over
 
-=item
+=item C<Ini::Parser::Section> instance
 
 =back
 
 =head2 Ini::Parser::Section::get
 
-Description
+Return single key from section data.
+
+Raise C<Ini::Parser::Error> exception if key is not found, unless C<default>
+argument is given.
 
 =head3 Arguments
 
 =over
 
-=item
+=item key - (STRING)
+
+Key name.
+
+=item default - (MISC) [opt]
+
+Default value to return if C<key> is not found.
 
 =back
 
@@ -853,19 +854,23 @@ Description
 
 =over
 
-=item
+=item (STRING)
+
+Value
 
 =back
 
 =head2 Ini::Parser::Section::keys
 
-Description
+Returns list of all keys from this section.
+
+Keys are always sorted.
 
 =head3 Arguments
 
 =over
 
-=item
+=item B<NONE>
 
 =back
 
@@ -873,19 +878,23 @@ Description
 
 =over
 
-=item
+=item (ARRAY of STRING)
+
+List of keys from this section.
 
 =back
 
 =head2 Ini::Parser::Section::values
 
-Description
+Returns list of all values from this section.
+
+Order of values is always matching to order of keys read via L<Ini::Parser::Section::keys>.
 
 =head3 Arguments
 
 =over
 
-=item
+=item B<NONE>
 
 =back
 
@@ -893,19 +902,21 @@ Description
 
 =over
 
-=item
+=item (ARRAY of STRING)
+
+List of values from this section.
 
 =back
 
 =head2 Ini::Parser::Section::to_hash
 
-Description
+Return all section data as HASH.
 
 =head3 Arguments
 
 =over
 
-=item
+=item B<NONE>
 
 =back
 
@@ -913,7 +924,9 @@ Description
 
 =over
 
-=item
+=item (HASH)
+
+Section data.
 
 =back
 

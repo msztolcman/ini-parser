@@ -674,13 +674,15 @@ their content.
 
 =head2 Ini::Parser::section
 
-Description
+Return whole section data.
 
 =head3 Arguments
 
 =over
 
-=item
+=item C<section> - (STRING)
+
+Name of section from file.
 
 =back
 
@@ -688,7 +690,7 @@ Description
 
 =over
 
-=item
+=item C<Ini::Parser::Section> instance. See below.
 
 =back
 

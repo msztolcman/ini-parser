@@ -900,6 +900,86 @@ Description
 
 =back
 
+=head2 Ini::Parser::Error::new
+
+Description
+
+=head3 Arguments
+
+=over
+
+=item
+
+=back
+
+=head3 Returns
+
+=over
+
+=item
+
+=back
+
+=head2 Ini::Parser::Error::message
+
+Description
+
+=head3 Arguments
+
+=over
+
+=item
+
+=back
+
+=head3 Returns
+
+=over
+
+=item
+
+=back
+
+=head2 Ini::Parser::Error::code
+
+Description
+
+=head3 Arguments
+
+=over
+
+=item
+
+=back
+
+=head3 Returns
+
+=over
+
+=item
+
+=back
+
+=head2 Ini::Parser::Error::to_string
+
+Description
+
+=head3 Arguments
+
+=over
+
+=item
+
+=back
+
+=head3 Returns
+
+=over
+
+=item
+
+=back
+
 =head1 SEE ALSO
 
 =over 4

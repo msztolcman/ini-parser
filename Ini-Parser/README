@@ -1,0 +1,39 @@
+Ini-Parser
+
+
+INSTALLATION
+
+To install this module, run the following commands:
+
+	perl Makefile.PL
+	make
+	make test
+	make install
+
+Or just:
+    cpan Ini::Parser
+
+:)
+
+SUPPORT AND DOCUMENTATION
+
+After installing, you can find documentation for this module with the
+perldoc command.
+
+    perldoc Ini::Parser
+
+You can also look for information at:
+
+    Ini::Parser home & source code
+        https://github.com/mysz/ini-parser
+
+    Issue tracker (report bugs here)
+        https://github.com/mysz/ini-parser/issues
+
+LICENSE AND COPYRIGHT
+
+	Copyright (c) 2012 Marcin Sztolcman. All rights reserved.
+
+	This program is free software; you can redistribute
+	it and/or modify it under the terms of the MIT license.
+

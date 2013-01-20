@@ -347,7 +347,7 @@ package Ini::Parser::Section;
     sub values {
         my($self) = @_;
 
-        my @values = sort values(%{$$self{data}});
+        my @values = @{$$self{data}}{$self->keys()};
 
         return @values;
     }

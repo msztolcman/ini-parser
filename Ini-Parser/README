@@ -17,6 +17,13 @@ Ini::Parser provides simple parser to .ini files. Syntax which is supported:
 
     !import = somefile.ini
 
+    [section4]
+    key5 = value5
+    key6 = "${section1.key2} ${key7} ${section5.key8}"
+    key7 = value7
+    [section5]
+    key8 = value8
+
 INSTALLATION
 
 To install this module, run the following commands:

@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 20;
+use Test::More tests => 30;
 
 use Try::Tiny::SmartCatch 0.5 qw/:all/;
 
@@ -37,6 +37,17 @@ is($parser->section('section with space')->get('key10'), "value10", 'get value f
 is($parser->section('section!with:exclamation and colon and space')->get('key11'), "value11", 'get value from section with space, exclamation and colon');
 
 is($parser->section('section!with:exclamation and colon and space')->get('key12 with=some chars'), 'value12', 'get value from key with space and equal character (in quotes)');
+
+is($parser->section('section7')->get('key14'), 'value1', 'interpolate: single value from other section without quotes');
+is($parser->section('section7')->get('key15'), 'value1', 'interpolate: single value from other section with quotes');
+is($parser->section('section7')->get('key16'), 'value13', 'interpolate: single value from same section (relative) without quotes');
+is($parser->section('section7')->get('key17'), 'value13', 'interpolate: single value from same section (relative) with quotes');
+is($parser->section('section7')->get('key18'), 'value13', 'interpolate: single value from same section (absolute) without quotes');
+is($parser->section('section7')->get('key19'), 'value13', 'interpolate: single value from same section (absolute) with quotes');
+is($parser->section('section7')->get('key20'), 'value24', 'interpolate: single value from same section (relative) without quotes, defined after this key');
+is($parser->section('section7')->get('key21'), 'value24', 'interpolate: single value from same section (relative) with quotes, defined after this key');
+is($parser->section('section7')->get('key22'), 'value1 value13 value24', 'interpolate: multiple values from different sections without quotes');
+is($parser->section('section7')->get('key23'), 'value1 value13 value24', 'interpolate: multiple values from different sections with quotes');
 
 try sub {
     $parser->section('nonexistent');

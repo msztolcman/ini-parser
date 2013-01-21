@@ -13,34 +13,40 @@ package Ini::Parser;
 
     sub MAX_FEED_FILENAME_LENGTH () { 256 }
 
+    my $_rxp_section__chars = '[a-zA-Z0-9: !_-]+';
     my $rxp_section = qr/
         (?:^|\r?\n)+
         [ \t]*
         \[
-            ([a-zA-Z0-9: !_-]+)
+            ($_rxp_section__chars)
         \]
         [ \t]*
         (?=\r?\n|$)
     /x;
 
+    my $_rxp_data__normal_key = '[a-zA-Z0-9:_-][a-zA-Z0-9:!_-]*';
+    my $_rxp_data__quoted_key = '"[a-zA-Z0-9:! =_-]+"';
+    my $_rxp_data__instruction = '![a-zA-Z0-9:!_-]+';
+    my $_rxp_data__quoted_value = '"([^"]*)"';
+    my $_rxp_data__normal_value = '(.*)';
     my $rxp_data = qr/
         (?:
             (?:
                 [ \t]*
                 (?:
-                    ([a-zA-Z0-9:_-][a-zA-Z0-9:!_-]*)   # normal key name
+                    ($_rxp_data__normal_key)    # normal key name
                     |
-                    "([a-zA-Z0-9:! =_-]+)" # quoted key name
+                    ($_rxp_data__quoted_key)    # quoted key name
                     |
-                    (![a-zA-Z0-9:!_-]+)  # instruction
+                    ($_rxp_data__instruction)   # instruction
                 )
                 [ \t]*
                 =
                 [ \t]*
                 (?:
-                    "([^"]*)"
+                    $_rxp_data__quoted_value
                     |
-                    (.*)
+                    $_rxp_data__normal_value
                 )?
                 [ \t]*
                 (?:\r?\n|$)+
@@ -50,6 +56,21 @@ package Ini::Parser;
         )
     /x;
 
+    my $rxp_interpolate = qr/
+        (
+            \$
+            \{
+                (?:
+                    ($_rxp_section__chars)\.
+                )?
+                (?:
+                    ($_rxp_data__normal_key)
+                    |
+                    ($_rxp_data__quoted_key)
+                )
+            \}
+        )
+    /x;
 
     sub __trim {
         my ($s) = @_;
@@ -68,6 +89,7 @@ package Ini::Parser;
         $self = {
             source => [],
             parsed => undef,
+            interpolate => 1,
         };
 
         $self = bless($self, $class);
@@ -189,13 +211,10 @@ package Ini::Parser;
         return $self->$callback($instruction, $value);
     }
 
-    sub parse {
+    sub __parse__simple {
         my($self) = @_;
 
         my ($data, $i, $i_max, $key, @parts, $section, $src, $value);
-
-        $$self{parsed} = {}
-            if (!defined($$self{parsed}));
 
         foreach $src (@{$$self{source}}) {
             @parts = split(/$rxp_section/, __trim($src));
@@ -216,7 +235,14 @@ package Ini::Parser;
                         $self->process_instruction($3, $value);
                     }
                     else {
-                        $key = (defined($1) ? $1 : $2);
+                        $key = undef;
+                        if (defined($1)) {
+                            $key = $1;
+                        }
+                        elsif (defined($2)) {
+                            $key = substr($2, 1, -1);
+                        }
+
                         next if (!defined($key));
 
                         $$self{parsed}{$section}{$key} = $value;
@@ -224,6 +250,34 @@ package Ini::Parser;
                 }
             }
         }
+
+    }
+
+    sub __parse__interpolation {
+        my($self) = @_;
+
+        my($key, $key_name, $section);
+        foreach $section (keys(%{$$self{parsed}})) {
+            foreach $key (keys(%{$$self{parsed}{$section}})) {
+                $$self{parsed}{$section}{$key} =~ s/$rxp_interpolate/
+                    $key_name = (defined($4) ? substr($4, 1, -1) : $3);
+                    defined($key_name) && defined($2)   ? $$self{parsed}{$2}{$key_name}         :
+                    defined($key_name)                  ? $$self{parsed}{$section}{$key_name}   :
+                                                          $1
+                /ge;
+            }
+        }
+    }
+
+    sub parse {
+        my($self) = @_;
+
+        $$self{parsed} = {}
+            if (!defined($$self{parsed}));
+
+        $self->__parse__simple ();
+        $self->__parse__interpolation ()
+            if ($$self{interpolate});
 
         return $self;
     }
@@ -463,6 +517,13 @@ Ini::Parser provides simple parser to .ini files. Syntax which is supported:
     "key name = with equal" = value5
 
     !import = somefile.ini
+
+    [section4]
+    key5 = value5
+    key6 = "${section1.key2} ${key7} ${section5.key8}"
+    key7 = value7
+    [section5]
+    key8 = value8
 
 =head2 SECTION
 

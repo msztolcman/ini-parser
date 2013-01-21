@@ -24,7 +24,12 @@ Description
 This module have many competitors, such as: [Config::Tiny](https://metacpan.org/module/Config::Tiny), [Config::Simple](https://metacpan.org/module/Config::Simple), [Config::General](https://metacpan.org/module/Config::General). They are great, but are missing one key feature: importing other files.
 ```Ini::Parser``` recognize ```!import``` directive, which is an answer to my needs.
 
-Currently here is at least one missing, but needed feature: interpolating. But it will be...
+```Ini::Parser``` is able also to interpolate variables (can be disabled in constructor). Syntax:
+    ${section.key}
+or
+    ${key}
+
+There is mandatory dollar sign, and whole expression is surrounded by braces. Expression can be _absolute_ (```section.key``` - ```section``` as section name, ```key``` as key name), or _relative_ (```key``` - just key name from current section).
 
 Main class is ```Ini::Parser```. After feed an instance, and call ```Ini::Parser::parse```, there will be work with another class: ```Ini::Parser::Section```.
 The last one you don't instantiate - it's created for you when it's needed (lazy evaluation). It means - when ```Ini::Parser::section``` method is called.

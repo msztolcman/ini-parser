@@ -85,12 +85,13 @@ package Ini::Parser;
     sub new {
         my($class, $cfg) = @_;
 
-        my($self);
+        my($interpolate, $self);
 
+        $interpolate = (exists($$cfg{interpolate}) ? $$cfg{interpolate} : 1);
         $self = {
             source => [],
             parsed => undef,
-            interpolate => 1,
+            interpolate => ($interpolate ? 1 : 0),
         };
 
         $self = bless($self, $class);
@@ -628,6 +629,10 @@ see: L</Ini::Parser::feed>
 =item C<src_type> - (STRING) [opt]
 
 see: L</Ini::Parser::feed>
+
+=item C<interpolate> - (BOOL) [opt]
+
+Enable or disable variables interpolation. Default to true.
 
 =back
 

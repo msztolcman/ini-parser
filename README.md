@@ -39,6 +39,17 @@ There is yet another class: ```Ini::Parser::Error```. It's an exception class, r
 Piece of code
 =============
 
+```ini
+[auth]
+login = YOUR-LOGIN
+password = YOUR-PASSWORD
+
+[host_cfg]
+host = YOUR-HOST
+uri = YOUR-URI
+url = http://${host}${uri}
+```
+
 ```perl
 use strict;
 use warnings;
@@ -57,16 +68,15 @@ try sub {
     $auth = $parser->section('auth');
     $host_cfg = $parser->section('host_cfg');
 
-    my(%headers, $http, $request, $url);
+    my(%headers, $http, $request);
 
     $headers{Authorization} = 'Basic ' . encode_base64($auth->get('login') . ':' . $auth->get('password'))
         if ($auth->get('login') && $auth->get('password'));
 
     $http = HTTP::Tiny->new();
-    $url = 'http://' . $host_cfg->get('host') . $host_cfg->get('uri');
-    $request = $http->head($url, { headers => \%headers });
+    $request = $http->head($host_cfg->get('url'), { headers => \%headers });
 
-    throw(qq/Cannot access server "$url": [/ . $$request{status} . '] ' . $$request{reason})
+    throw(sprintf('Cannot access server "%s": [%s] %s', $host_cfg->get('url'), $$request{status}, $$request{reason}))
         if ($$request{status} != 200);
 
     print Dumper($$request{headers}), "\n";

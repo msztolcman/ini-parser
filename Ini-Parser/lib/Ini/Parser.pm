@@ -13,6 +13,7 @@ package Ini::Parser;
 
     sub MAX_FEED_FILENAME_LENGTH () { 256 }
 
+    # regular expressions
     my $_rxp_section__chars = '[a-zA-Z0-9: !_-]+';
     my $rxp_section = qr/
         (?:^|\r?\n)+

@@ -74,7 +74,7 @@ package Ini::Parser;
     /x;
 
     sub __trim {
-        my ($s) = @_;
+        my($s) = @_;
 
         $s =~ s/^\s+//;
         $s =~ s/\s+$//;
@@ -85,13 +85,15 @@ package Ini::Parser;
     sub new {
         my($class, $cfg) = @_;
 
-        my($interpolate, $self);
+        my($interpolate, $property_access, $self);
 
         $interpolate = (exists($$cfg{interpolate}) ? $$cfg{interpolate} : 1);
+        $property_access = (exists($$cfg{property_access}) ? $$cfg{property_access} : 0);
         $self = {
             source => [],
             parsed => undef,
             interpolate => ($interpolate ? 1 : 0),
+            property_access => ($property_access ? 1 : 0),
         };
 
         $self = bless($self, $class);
@@ -216,7 +218,7 @@ package Ini::Parser;
     sub __parse__simple {
         my($self) = @_;
 
-        my ($data, $i, $i_max, $key, @parts, $section, $src, $value);
+        my($data, $i, $i_max, $key, @parts, $section, $src, $value);
 
         foreach $src (@{$$self{source}}) {
             @parts = split(/$rxp_section/, __trim($src));
@@ -259,6 +261,7 @@ package Ini::Parser;
         my($self) = @_;
 
         my($key, $key_name, $section);
+        #iterating thru keys - we don't want to automatically create Ini::Parser::Section objects
         foreach $section (keys(%{$$self{parsed}})) {
             foreach $key (keys(%{$$self{parsed}{$section}})) {
                 $$self{parsed}{$section}{$key} =~ s/$rxp_interpolate/
@@ -271,6 +274,28 @@ package Ini::Parser;
         }
     }
 
+    my %property_access_disallow = map { $_ => 1 } keys(%{__PACKAGE__::});
+    my $rxp_property_access_allowed = qr/^ [a-zA-Z_] [a-zA-Z0-9_]* $/x;
+    sub __parse__property_access {
+        my($self) = @_;
+
+        #iterating thru keys - we don't want to automatically create Ini::Parser::Section objects
+        foreach my $__section (keys(%{$$self{parsed}})) {
+            next if ($property_access_disallow{$__section});
+            next if ($__section !~ /$rxp_property_access_allowed/);
+
+            my ($__sub, $__name);
+            $__sub = sub {
+                my($self) = @_;
+                return $self->section($__section);
+            };
+            $__name = ref($self) . '::' . $__section;
+
+            no strict 'refs';
+            *{$__name} = $__sub;
+        }
+    }
+
     sub parse {
         my($self) = @_;
 
@@ -280,6 +305,9 @@ package Ini::Parser;
         $self->__parse__simple ();
         $self->__parse__interpolation ()
             if ($$self{interpolate});
+
+        $self->__parse__property_access()
+            if ($$self{property_access});
 
         return $self;
     }
@@ -308,7 +336,7 @@ package Ini::Parser;
     }
 
     sub section {
-        my ($self, $section) = @_;
+        my($self, $section) = @_;
 
         $self->is_parsed();
 
@@ -318,7 +346,7 @@ package Ini::Parser;
         throw(Ini::Parser::Error->new(qq/Unknown section "$section"/))
             if (!exists($$self{parsed}{$section}));
 
-        $$self{parsed}{$section} = Ini::Parser::Section->new($section, $$self{parsed}{$section})
+        $$self{parsed}{$section} = Ini::Parser::Section->new($section, $$self{parsed}{$section}, { property_access => $$self{property_access} })
             if (ref($$self{parsed}{$section}) eq 'HASH');
 
         return $$self{parsed}{$section};
@@ -346,7 +374,7 @@ package Ini::Parser;
     sub to_hash {
         my($self) = @_;
 
-        my ($data, %ret, $section, @sections);
+        my($data, %ret, $section, @sections);
         @sections = $self->sections();
         foreach $section (@sections) {
             $data = $self->section($section);
@@ -368,14 +396,36 @@ package Ini::Parser::Section;
 
     use Try::Tiny::SmartCatch 0.5 qw/:all/;
 
+    my %property_access_disallow = map { $_ => 1 } keys(%{__PACKAGE__::});
+    my $rxp_property_access_allowed = qr/^ [a-zA-Z_] [a-zA-Z0-9_]* $/x;
     sub new {
-        my($class, $section, $data) = @_;
+        my($class, $section, $data, $cfg) = @_;
 
         my $self = {
             section => $section,
             data => dclone($data),
         };
-        return bless($self, $class);
+
+        $self = bless($self, $class);
+
+        if ($$cfg{property_access}) {
+            foreach my $__key ($self->keys()) {
+                next if ($property_access_disallow{$__key});
+                next if ($__key !~ /$rxp_property_access_allowed/);
+
+                my ($__sub, $__name);
+                $__name = ref($self) . '::' . $__key;
+                $__sub = sub {
+                    my($self) = @_;
+                    return $self->get($__key);
+                };
+
+                no strict 'refs';
+                *{$__name} = $__sub;
+            }
+        }
+
+        return $self;
     }
 
     sub get {

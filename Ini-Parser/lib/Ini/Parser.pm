@@ -520,9 +520,9 @@ Version 0.1
 
     # create object and feed with some data (optional)
     my $ini = Ini::Parser->new({ src => 'filename.ini', src_type => 'filename' });
-    my $Ini = Ini::Parser->new({ src => $filehandler, src_type => 'filehandler' });
-    my $Ini = Ini::Parser->new({ src => $obj_with_read_method, src_type => 'filenamobject' });
-    my $Ini = Ini::Parser->new({ src => $ini_in_string, src_type => 'string' });
+    my $ini = Ini::Parser->new({ src => $filehandler, src_type => 'filehandler' });
+    my $ini = Ini::Parser->new({ src => $obj_with_read_method, src_type => 'filenamobject' });
+    my $ini = Ini::Parser->new({ src => $ini_in_string, src_type => 'string' });
 
     # feed with additional data
     $ini->feed('filename2.ini', { src_type => 'filename' });
@@ -683,6 +683,30 @@ see: L</Ini::Parser::feed>
 =item C<interpolate> - (BOOL) [opt]
 
 Enable or disable variables interpolation. Default to true.
+
+=item C<property_access> - (BOOL) [opt]
+
+Enable or disable property access to data. Default to false.
+
+If true, there will be enabled second way to access for data. Recommended is the one with implicit getters:
+
+=over 3
+
+=item L</Ini::Parser::section>
+
+=item L</Ini::Parser::Section::key>
+
+=back
+
+But sometimes it's convenient to use properties:
+
+    my $value = $ini->section_name->key_name;
+
+It's works only for sections and keys which name doesn't conflict with builtin methods name, and matching
+pattern:
+    [a-zA-Z_][a-zA-Z0-9_]*
+
+For any other identifier there is only getter access.
 
 =back
 

@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 22;
+use Test::More tests => 23;
 
 use Try::Tiny::SmartCatch 0.5 qw/:all/;
 
@@ -23,9 +23,9 @@ isa_ok($section, 'Ini::Parser::Section', 'is correct type');
 
 my @keys = $section->keys();
 my @values = $section->values();
-is_deeply(\@keys, ['key13'  .. 'key24' ], 'section::keys');
+is_deeply(\@keys, ['key13'  .. 'key25' ], 'section::keys');
 is_deeply(\@values,
-    [qw/value13 value1 value1 value13 value13 value13 value13 value24 value24/, 'value1 value13 value24', 'value1 value13 value24', 'value24'],
+    [qw/value13 value1 value1 value13 value13 value13 value13 value24 value24/, 'value1 value13 value24', 'value1 value13 value24', 'value24', 'value25_1;value25_2'],
     'section::values'
 );
 
@@ -48,6 +48,7 @@ is_deeply({$section->to_hash()},
         key22 => 'value1 value13 value24',
         key23 => 'value1 value13 value24',
         key24 => 'value24',
+        key25 => 'value25_1;value25_2',
     },
     'section::to_hash'
 );

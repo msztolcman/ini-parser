@@ -29,7 +29,7 @@ package Ini::Parser;
     my $_rxp_data__quoted_key = '"[a-zA-Z0-9:! =_-]+"';
     my $_rxp_data__instruction = '![a-zA-Z0-9:!_-]+';
     my $_rxp_data__quoted_value = '"([^"]*)"';
-    my $_rxp_data__normal_value = '(.*)';
+    my $_rxp_data__normal_value = '([^;\r\n]*)';
     my $rxp_data = qr/
         (?:
             (?:
@@ -50,6 +50,7 @@ package Ini::Parser;
                     $_rxp_data__normal_value
                 )?
                 [ \t]*
+                (?:;.*)?
                 (?:\r?\n|$)+
             )
             |

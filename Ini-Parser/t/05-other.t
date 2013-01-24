@@ -42,7 +42,7 @@ catch_default sub {
     fail('Source is parsed, unknown exception is raised: ' . $_);
 };
 
-is_deeply([$parser->sections()], [ 'section with space', 'section!with:exclamation and colon and space', 'section1', 'section2', 'section3', 'section4', 'section7' ], 'all sections in file');
+is_deeply([$parser->sections()], [ 'section with space', 'section!with:exclamation and colon and space', 'section1' .. 'section4', 'section7' .. 'section9' ], 'all sections in file');
 
 is_deeply({$parser->to_hash()}, {
     section1 => {
@@ -77,6 +77,11 @@ is_deeply({$parser->to_hash()}, {
         key22 => 'value1 value13 value24',
         key23 => 'value1 value13 value24',
         key24 => 'value24',
+        key25 => 'value25_1;value25_2',
+    },
+    section8 => { },
+    section9 => {
+        key26 => 'value26',
     },
 }, 'to_hash');
 

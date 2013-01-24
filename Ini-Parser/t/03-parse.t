@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 30;
+use Test::More tests => 32;
 
 use Try::Tiny::SmartCatch 0.5 qw/:all/;
 
@@ -48,6 +48,8 @@ is($parser->section('section7')->get('key20'), 'value24', 'interpolate: single v
 is($parser->section('section7')->get('key21'), 'value24', 'interpolate: single value from same section (relative) with quotes, defined after this key');
 is($parser->section('section7')->get('key22'), 'value1 value13 value24', 'interpolate: multiple values from different sections without quotes');
 is($parser->section('section7')->get('key23'), 'value1 value13 value24', 'interpolate: multiple values from different sections with quotes');
+is($parser->section('section7')->get('key25'), 'value25_1;value25_2', 'semicolon in quotes is not a comment');
+is_deeply([$parser->section('section8')->keys()], [], 'just single line with comment only, no keys');
 
 try sub {
     $parser->section('nonexistent');

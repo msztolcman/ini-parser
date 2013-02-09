@@ -12,6 +12,7 @@ WriteMakefile(
       ? ('LICENSE'=> 'MIT')
       : ()),
     PL_FILES            => {},
+    MIN_PERL_VERSION    => '5.006',
     PREREQ_PM => {
         'Test::More' => 0,
         'Try::Tiny::SmartCatch' => "0.5",
@@ -23,5 +24,4 @@ WriteMakefile(
             repository  =>  'https://github.com/mysz/ini-parser',
         },
     },
-    LICENSE => 'mit',
 );

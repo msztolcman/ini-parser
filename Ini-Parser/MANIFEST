@@ -1,4 +1,5 @@
 Changes
+ignore.txt
 lib/Ini/Parser.pm
 Makefile.PL
 MANIFEST			This list of files
@@ -10,6 +11,7 @@ t/03-parse.t
 t/04-parse_import.t
 t/05-other.t
 t/06-section.t
+t/07-property_access.t
 t/basic.ini
 t/import.ini
 t/imported.ini

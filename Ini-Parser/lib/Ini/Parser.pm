@@ -86,8 +86,10 @@ package Ini::Parser;
     sub new {
         my($class, $cfg) = @_;
 
-        my($interpolate, $property_access, $self);
+        my($ci_keys, $ci_sections, $interpolate, $property_access, $self);
 
+        $ci_keys = (exists($$cfg{ci_keys}) ? $$cfg{ci_keys} : 1);
+        $ci_sections = (exists($$cfg{ci_sections}) ? $$cfg{ci_sections} : 1);
         $interpolate = (exists($$cfg{interpolate}) ? $$cfg{interpolate} : 1);
         $property_access = (exists($$cfg{property_access}) ? $$cfg{property_access} : 0);
         $self = {
@@ -95,6 +97,8 @@ package Ini::Parser;
             parsed => undef,
             interpolate => ($interpolate ? 1 : 0),
             property_access => ($property_access ? 1 : 0),
+            ci_keys => ($ci_keys ? 1 : 0),
+            ci_sections => ($ci_sections ? 1 : 0),
         };
 
         $self = bless($self, $class);
@@ -230,6 +234,7 @@ package Ini::Parser;
                     defined($_) ? __trim($_) : ''
                 } @parts[$i, $i+1];
 
+                $section = lc ($section) if ($$self{ci_sections});
                 $$self{parsed}{$section} = {}
                     if (!defined($$self{parsed}{$section}));
 
@@ -250,6 +255,7 @@ package Ini::Parser;
 
                         next if (!defined($key));
 
+                        $key = lc ($key) if ($$self{ci_keys});
                         $$self{parsed}{$section}{$key} = $value;
                     }
                 }
@@ -344,6 +350,7 @@ package Ini::Parser;
         throw(Ini::Parser::Error->new('Missing section'))
             if (scalar @_ < 2);
 
+        $section = lc ($section) if ($$self{ci_sections});
         throw(Ini::Parser::Error->new(qq/Unknown section "$section"/))
             if (!exists($$self{parsed}{$section}));
 
@@ -399,12 +406,14 @@ package Ini::Parser::Section;
 
     my %property_access_disallow = map { $_ => 1 } keys(%{__PACKAGE__::});
     my $rxp_property_access_allowed = qr/^ [a-zA-Z_] [a-zA-Z0-9_]* $/x;
+
     sub new {
         my($class, $section, $data, $cfg) = @_;
 
         my $self = {
             section => $section,
             data => dclone($data),
+            ci_keys => $$cfg{ci_keys},
         };
 
         $self = bless($self, $class);
@@ -432,6 +441,7 @@ package Ini::Parser::Section;
     sub get {
         my($self, $key, ) = @_;
 
+        $key = lc ($key) if ($$self{ci_keys});
         if (exists($$self{data}{$key})) {
             return $$self{data}{$key};
         }
@@ -583,6 +593,8 @@ Ini::Parser provides simple parser to .ini files. Syntax which is supported:
 Section name can contain characters: a-z, A-Z, 0-9, ':', ' ', '!', '_', '-'
 and must have at least one characters length.
 
+If C<ci_sections> argument is provided to constructor, sections are always lowercased.
+
 =head2 KEY
 
 Key can have two different syntaxes:
@@ -592,6 +604,8 @@ and must have at least one characters length.
 
 2. With quotes. Must begin and end with double quotes char, and contain
 characters: a-z, A-Z, 0-9, ':', '!', ' ', '=', '_', '-'
+
+If C<ci_keys> argument is provided to constructor, keys are always lowercased.
 
 =head2 VALUE
 
@@ -683,13 +697,21 @@ see: L</Ini::Parser::feed>
 
 =item C<interpolate> - (BOOL) [opt]
 
-Enable or disable variables interpolation. Default to true.
+Enable or disable variables interpolation. Defaults to true.
 
 =item C<property_access> - (BOOL) [opt]
 
-Enable or disable property access to data. Default to false.
+Enable or disable property access to data. Defaults to false.
 
 If true, there will be enabled second way to access for data. Recommended is the one with implicit getters:
+
+=item C<ci_sections> - (BOOL) [opt]
+
+If false, sections are always lowercased, and case insensitive when search for it. Defaults to true.
+
+=item C<ci_keys> - (BOOL) [opt]
+
+If false, keys are always lowercased, and case insensitive when search for it. Defaults to true.
 
 =over 3
 
